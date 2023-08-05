@@ -1,45 +1,49 @@
-const btn = document.getElementById('submit');
+const submitBtn = document.getElementById('submit');
+
 const taskList = document.getElementById("task-list");
 
-btn.addEventListener('click', (e) => {
-  // prevent page reload on button click:
-  e.preventDefault();
-  
-  // new list element:
-  const node = document.createElement("li");
-  node.setAttribute('id', uniqueID());
+// get input element:
+const inputBox = document.getElementById('task');
 
-  const input = document.createElement("input");
-  input.setAttribute('type', 'checkbox');
-  input.setAttribute('name', 'completed');
-
-  const deleteBtn = document.createElement("button");
-  deleteBtn.setAttribute('id', 'deleteBtn');
-  deleteBtn.append('delete');
-  
-  // get input element:
-  let task = document.getElementById('task');
-  
-  if (task.value === "") {
+function addTask() {
+  if (inputBox.value === "") {
     console.error('cannot submit empty task...');
     return;
   }
+  else {
+    // new list element:
+    const li = document.createElement("li");
+    
+    const input = document.createElement("input");
+    input.setAttribute('type', 'checkbox');
+    input.setAttribute('name', 'completed');
+    
+    const deleteBtn = document.createElement("button");
+    deleteBtn.append('delete');
+    
+    li.append(inputBox.value);  // add input's text value
+    li.appendChild(input);      // add completed checkbox
+    li.appendChild(deleteBtn);  // add delete button
 
-  // add to new 'li' element:
-  node.append(task.value);      // add input's text value
-  node.appendChild(input);      // add completed checkbox
-  node.appendChild(deleteBtn);  // add delete button
-
-  // Append 'li' to task list:
-  taskList.appendChild(node);
-
+    // Append 'li' to task list:
+    taskList.appendChild(li);
+  }
+  
   // reset input text
-  task.value = "";
+  inputBox.value = "";
+}
+
+submitBtn.addEventListener('click', (e) => {
+  // prevent page reload on button click:
+  e.preventDefault();
+  addTask();
 });
 
-for (let i = 0; i < taskList.childNodes.length; i++) {
-  console.log(taskList.childNodes);  
-}
+taskList.addEventListener('click', (e) => {
+  // remove li corresponding to delete button:   
+  if (e.target.tagName === "BUTTON")
+    e.target.parentElement.remove();
+});
 
 // helper functions:
 // generate unique id for each list item:
