@@ -1,0 +1,35 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  padding: 10px;
+  background: blanchedalmond;
+}
+
+.app {
+  width: 100vw;
+  max-width: 550px;
+  background: #fff;
+  margin: 100px auto 20px;
+  padding: 40px 30px 70px;
+  border-radius: 10px;
+}
+
+.app h1 {
+  color: #002765;
+  margin-bottom: 20px;
+}
+
+.input-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: #edeef0;
+  border-radius: 30px;
+}

@@ -41,7 +41,7 @@ submitBtn.addEventListener('click', (e) => {
 
 taskList.addEventListener('click', (e) => {
   // remove li corresponding to delete button:   
-  if (e.target.tagName === "BUTTON")
+  if (e.target.tagName.toLowerCase() === 'button')
     e.target.parentElement.remove();
 });
 
