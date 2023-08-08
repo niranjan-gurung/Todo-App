@@ -1,5 +1,7 @@
-const submitBtn = document.getElementById('submit');
+const submitBtn = document.getElementById('form-btn');
 
+// task container (empty 'ul'),
+// addTask() - fills this element with 'li':
 const taskList = document.getElementById("task-list");
 
 // get input element:
@@ -7,7 +9,7 @@ const inputBox = document.getElementById('task');
 
 function addTask() {
   if (inputBox.value === "") {
-    console.error('cannot submit empty task...');
+    alert('cannot submit empty task...');
     return;
   }
   else {
@@ -19,7 +21,7 @@ function addTask() {
     input.setAttribute('name', 'completed');
     
     const deleteBtn = document.createElement("button");
-    deleteBtn.append('delete');
+    deleteBtn.append('Delete');
     
     li.append(inputBox.value);  // add input's text value
     li.appendChild(input);      // add completed checkbox

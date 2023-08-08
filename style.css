@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
 }
 
 .container {
@@ -16,7 +17,7 @@
   max-width: 550px;
   background: #fff;
   margin: 100px auto 20px;
-  padding: 40px 30px 70px;
+  padding: 40px 30px 40px;
   border-radius: 10px;
 }
 
@@ -32,4 +33,56 @@
 
   background: #edeef0;
   border-radius: 30px;
+  padding-left: 20px;
+  margin-bottom: 20px;
+}
+
+.input-field input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 10px;
+}
+
+#form-btn {
+  border: none;
+  outline: none;
+  padding: 16px 50px;
+  background: #002765;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 40px;
+}
+
+#task-list {
+  padding: 15px;
+}
+
+#task-list li {
+  display: flex;
+  
+  list-style: none;
+  font-size: 17px;
+  padding: 10px 15px;
+  user-select: none;
+  cursor: pointer;
+}
+
+#task-list li input {
+  margin-left: auto;
+  transform: scale(1.1);
+}
+
+#task-list li button {
+  margin-left: 20px;
+  border: none;
+  outline: none;
+  padding: 10px 12px;
+  background: #ff5945;
+  color: #fff;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 20px;
 }
