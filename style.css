@@ -4,6 +4,9 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body {
   font-family: 'Inter', sans-serif;
 }
 
@@ -14,7 +17,7 @@
   background: blanchedalmond;
 }
 
-.app {
+.todo-app {
   width: 100vw;
   max-width: 550px;
   background: #fff;
@@ -23,7 +26,7 @@
   border-radius: 10px;
 }
 
-.app h1 {
+.todo-app h1 {
   color: #002765;
   margin-bottom: 20px;
 }
@@ -67,18 +70,23 @@
   
   list-style: none;
   font-size: 17px;
-  padding: 10px 15px;
+  padding: 8px 15px;
   user-select: none;
   cursor: pointer;
 }
 
-#task-list li input {
-  margin-left: auto;
-  transform: scale(1.1);
+#task-list li label {
+  margin-left: 10px;
+  align-self: center;
 }
 
+#task-list input:checked + label {
+  text-decoration: line-through;
+  color: #555;
+} 
+
 #task-list li button {
-  margin-left: 20px;
+  margin-left: auto;
   border: none;
   outline: none;
   padding: 10px 12px;

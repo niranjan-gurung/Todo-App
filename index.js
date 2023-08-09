@@ -20,11 +20,14 @@ function addTask() {
     input.setAttribute('type', 'checkbox');
     input.setAttribute('name', 'completed');
     
+    const label = document.createElement("label");
+    label.append(inputBox.value)
+
     const deleteBtn = document.createElement("button");
     deleteBtn.append('Delete');
     
-    li.append(inputBox.value);  // add input's text value
     li.appendChild(input);      // add completed checkbox
+    li.appendChild(label);  // add input's text value
     li.appendChild(deleteBtn);  // add delete button
 
     // Append 'li' to task list:
