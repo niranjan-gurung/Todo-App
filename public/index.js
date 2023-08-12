@@ -27,7 +27,7 @@ function addTask() {
     deleteBtn.append('Delete');
     
     li.appendChild(input);      // add completed checkbox
-    li.appendChild(label);  // add input's text value
+    li.appendChild(label);      // add input's text value
     li.appendChild(deleteBtn);  // add delete button
 
     // Append 'li' to task list:
