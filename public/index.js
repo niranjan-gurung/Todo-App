@@ -1,3 +1,5 @@
+const baseURL = 'http://localhost:3000';
+
 const submitBtn = document.getElementById('form-btn');
 
 // task container (empty 'ul'),
@@ -33,15 +35,27 @@ function addTask() {
     // Append 'li' to task list:
     taskList.appendChild(li);
   }
-  
-  // reset input text
-  inputBox.value = "";
 }
 
 submitBtn.addEventListener('click', (e) => {
   // prevent page reload on button click:
   e.preventDefault();
   addTask();
+  
+  // post req:
+  fetch(baseURL, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ a:inputBox.value })
+  })
+  .then(res => { return res.json(); })
+  .then(data => { console.log(data); })
+
+  // reset input text
+  inputBox.value = "";
 });
 
 taskList.addEventListener('click', (e) => {
@@ -49,9 +63,3 @@ taskList.addEventListener('click', (e) => {
   if (e.target.tagName.toLowerCase() === 'button')
     e.target.parentElement.remove();
 });
-
-// helper functions:
-// generate unique id for each list item:
-function uniqueID() {
-  return Math.floor(Math.random() * Date.now());
-}
