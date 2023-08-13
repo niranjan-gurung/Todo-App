@@ -1,18 +1,29 @@
 const express = require('express');
 const app = express();
+const tasksRoute = require('./routes/tasks');
 
+const connectDB = require('./db/connect');
 require('dotenv').config();
 
+const DB_URI = process.env.MONGO_URI;
 const PORT = process.env.PORT; 
 
 // middleware
 app.use(express.static('public'));
 app.use(express.json());
 
-app.post('/', (req, res) => {
-  res.status(200).json(req.body);
-});
+// router
+app.use('/tasks', tasksRoute);
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}...`);
-});
+const start = async () => {
+  try {
+    await connectDB(DB_URI);
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}...`);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+start();

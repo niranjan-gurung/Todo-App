@@ -9,6 +9,54 @@ const taskList = document.getElementById("task-list");
 // get input element:
 const inputBox = document.getElementById('task');
 
+const loadTasks = async () => {
+  
+  await fetch(baseURL + '/tasks', { method: 'GET' })
+  .then(res => {
+    return res.json();
+  })
+  .then(data => { 
+    console.log(data);
+    const allTasks = data.tasks.map(task => {
+      console.log(task);
+      const { completed, _id: taskID, name } = task;
+      return `<li>${completed, name}</li>`;
+    });
+
+    taskList.innerHTML = allTasks;
+  })
+  .catch(error => console.log(error));
+}
+
+loadTasks();
+
+submitBtn.addEventListener('click', (e) => {
+  // prevent page reload on button click:
+  e.preventDefault();
+  addTask();
+  
+  // post req:
+  fetch(baseURL + '/tasks', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ task: inputBox.value })
+  })
+  .then(res => { return res.json(); })
+  .then(data => { console.log(data); })
+  
+  // reset input text
+  inputBox.value = "";
+});
+
+taskList.addEventListener('click', (e) => {
+  // remove li corresponding to delete button:   
+  if (e.target.tagName.toLowerCase() === 'button')
+  e.target.parentElement.remove();
+});
+
 function addTask() {
   if (inputBox.value === "") {
     alert('cannot submit empty task...');
@@ -36,30 +84,3 @@ function addTask() {
     taskList.appendChild(li);
   }
 }
-
-submitBtn.addEventListener('click', (e) => {
-  // prevent page reload on button click:
-  e.preventDefault();
-  addTask();
-  
-  // post req:
-  fetch(baseURL, {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ a:inputBox.value })
-  })
-  .then(res => { return res.json(); })
-  .then(data => { console.log(data); })
-
-  // reset input text
-  inputBox.value = "";
-});
-
-taskList.addEventListener('click', (e) => {
-  // remove li corresponding to delete button:   
-  if (e.target.tagName.toLowerCase() === 'button')
-    e.target.parentElement.remove();
-});
