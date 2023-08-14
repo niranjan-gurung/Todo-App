@@ -16,12 +16,15 @@ const loadTasks = async () => {
     return res.json();
   })
   .then(data => { 
-    console.log(data);
+    //console.log(data);
     const allTasks = data.tasks.map(task => {
-      console.log(task);
-      const { completed, _id: taskID, name } = task;
-      return `<li>${completed, name}</li>`;
-    });
+      //console.log(task);
+      return `<li>
+        <input type="checkbox" name="completed" />
+        <label>${task.task}</label>
+        <button>Delete</button>
+      </li>`;
+    }).join('');
 
     taskList.innerHTML = allTasks;
   })
@@ -30,13 +33,13 @@ const loadTasks = async () => {
 
 loadTasks();
 
-submitBtn.addEventListener('click', (e) => {
+submitBtn.addEventListener('click', async (e) => {
   // prevent page reload on button click:
   e.preventDefault();
   addTask();
   
   // post req:
-  fetch(baseURL + '/tasks', {
+  await fetch(baseURL + '/tasks', {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
