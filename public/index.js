@@ -10,19 +10,18 @@ const taskList = document.getElementById("task-list");
 const inputBox = document.getElementById('task');
 
 const loadTasks = async () => {
-  
-  await fetch(baseURL + '/tasks', { method: 'GET' })
+  await fetch(`${baseURL}/tasks`, { method: 'GET' })
   .then(res => {
     return res.json();
   })
   .then(data => { 
-    //console.log(data);
     const allTasks = data.tasks.map(task => {
-      //console.log(task);
-      return `<li>
+      const { _id: taskID, task: name } = task;
+      console.log(taskID, name);
+      return `<li data-id="${taskID}>
         <input type="checkbox" name="completed" />
-        <label>${task.task}</label>
-        <button>Delete</button>
+        <label>${name}</label>
+        <button class="delete-btn">Delete</button>
       </li>`;
     }).join('');
 
@@ -39,7 +38,7 @@ submitBtn.addEventListener('click', async (e) => {
   addTask();
   
   // post req:
-  await fetch(baseURL + '/tasks', {
+  await fetch(`${baseURL}/tasks`, {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
@@ -48,16 +47,32 @@ submitBtn.addEventListener('click', async (e) => {
     body: JSON.stringify({ task: inputBox.value })
   })
   .then(res => { return res.json(); })
-  .then(data => { console.log(data); })
+  .then(data => console.log(data));
   
   // reset input text
   inputBox.value = "";
 });
 
-taskList.addEventListener('click', (e) => {
+taskList.addEventListener('click', async (e) => {
   // remove li corresponding to delete button:   
-  if (e.target.tagName.toLowerCase() === 'button')
-  e.target.parentElement.remove();
+  if (e.target.tagName.toLowerCase() === 'button') {
+    //const id = e.target.parentElement.dataset.id;
+    console.log(e.target.parentElement.dataset.id);
+
+    // await fetch(`${baseURL}/${id}`, {
+    //   method: 'DELETE'
+    // })
+    // .then(res => { return res.json(); })
+    // .then(data => console.log(data));
+
+    e.target.parentElement.remove();
+    //loadTasks();
+  }
+
+  //  if (e.target.parentElement.classList.contains('delete-btn')) {
+  //   console.log(el.parentElement.dataset.id);
+  //   e.target.parentElement.remove();
+  //  }
 });
 
 function addTask() {
