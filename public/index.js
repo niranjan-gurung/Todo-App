@@ -10,15 +10,15 @@ const taskList = document.getElementById("task-list");
 const inputBox = document.getElementById('task');
 
 const loadTasks = async () => {
-  await fetch(`${baseURL}/tasks`, { method: 'GET' })
-  .then(res => {
-    return res.json();
+  // get req:
+  await fetch(`${baseURL}/tasks`, { 
+    method: 'GET' 
   })
+  .then(res => { return res.json(); })
   .then(data => { 
     const allTasks = data.tasks.map(task => {
       const { _id: taskID, task: name } = task;
-      console.log(taskID, name);
-      return `<li data-id="${taskID}>
+      return `<li data-id="${taskID}">
         <input type="checkbox" name="completed" />
         <label>${name}</label>
         <button class="delete-btn">Delete</button>
@@ -32,6 +32,7 @@ const loadTasks = async () => {
 
 loadTasks();
 
+/* Add task into list: */
 submitBtn.addEventListener('click', async (e) => {
   // prevent page reload on button click:
   e.preventDefault();
@@ -53,26 +54,20 @@ submitBtn.addEventListener('click', async (e) => {
   inputBox.value = "";
 });
 
+/* Remove task from list: */
 taskList.addEventListener('click', async (e) => {
   // remove li corresponding to delete button:   
   if (e.target.tagName.toLowerCase() === 'button') {
-    //const id = e.target.parentElement.dataset.id;
-    console.log(e.target.parentElement.dataset.id);
+    const id = e.target.parentElement.dataset.id;
 
-    // await fetch(`${baseURL}/${id}`, {
-    //   method: 'DELETE'
-    // })
-    // .then(res => { return res.json(); })
-    // .then(data => console.log(data));
-
-    e.target.parentElement.remove();
-    //loadTasks();
+    // delete req:
+    await fetch(`${baseURL}/tasks/${id}`, {
+      method: 'DELETE',
+    })
+    .then(res => { return res.json(); })
+    .then(data => console.log(data));
+    loadTasks();
   }
-
-  //  if (e.target.parentElement.classList.contains('delete-btn')) {
-  //   console.log(el.parentElement.dataset.id);
-  //   e.target.parentElement.remove();
-  //  }
 });
 
 function addTask() {

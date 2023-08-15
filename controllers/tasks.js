@@ -20,13 +20,12 @@ const createTask = async (req, res) => {
 
 const deleteTask = async (req, res) => {
   try {
-    const { id: taskID } = req.params.id;
+    const taskID = req.params.id;
     const task = await Task.findOneAndDelete({ _id: taskID });
 
     if (!task) {
       return res.status(404).json({ msg: `No task with ID: ${taskID}.` });
     }
-    console.log(req.params.id);
 
     res.status(200).json({ task });
   } catch (error) {
