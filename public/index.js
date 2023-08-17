@@ -66,7 +66,23 @@ taskList.addEventListener('click', async (e) => {
     })
     .then(res => { return res.json(); })
     .then(data => console.log(data));
+    e.target.parentElement.remove();
     loadTasks();
+  }
+  else if (e.target.tagName.toLowerCase() === 'input') {
+    const id = e.target.parentElement.dataset.id;
+    await fetch(`${baseURL}/tasks/${id}`, {
+      method: 'PATCH',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        completed: true
+      })
+    })
+    .then(res => { return res.json(); })
+    .then(data => console.log(data));
   }
 });
 
