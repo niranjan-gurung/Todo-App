@@ -1,6 +1,8 @@
 const baseURL = 'http://localhost:3000';
 
-const submitBtn = document.getElementById('form-btn');
+const form = document.querySelector('form');
+
+const checkbox = document.getElementsByClassName('task-edit');
 
 // task container (empty 'ul'),
 // addTask() - fills this element with 'li':
@@ -17,9 +19,15 @@ const loadTasks = async () => {
   .then(res => { return res.json(); })
   .then(data => { 
     const allTasks = data.tasks.map(task => {
-      const { _id: taskID, task: name } = task;
+      const { _id: taskID, completed, task: name } = task;
+
+      if (completed) {
+        console.log(name + ' is completed!');
+        checkbox.checked = true;
+      }
+
       return `<li data-id="${taskID}">
-        <input type="checkbox" name="completed" />
+        <input type="checkbox" name="completed" class="task-edit" />
         <label>${name}</label>
         <button class="delete-btn">Delete</button>
       </li>`;
@@ -33,7 +41,7 @@ const loadTasks = async () => {
 loadTasks();
 
 /* Add task into list: */
-submitBtn.addEventListener('click', async (e) => {
+form.onsubmit = async (e) => {
   // prevent page reload on button click:
   e.preventDefault();
   addTask();
@@ -52,7 +60,7 @@ submitBtn.addEventListener('click', async (e) => {
   
   // reset input text
   inputBox.value = "";
-});
+}
 
 /* Remove task from list: */
 taskList.addEventListener('click', async (e) => {
@@ -66,7 +74,7 @@ taskList.addEventListener('click', async (e) => {
     })
     .then(res => { return res.json(); })
     .then(data => console.log(data));
-    e.target.parentElement.remove();
+    //e.target.parentElement.remove();
     loadTasks();
   }
   else if (e.target.tagName.toLowerCase() === 'input') {
@@ -82,7 +90,13 @@ taskList.addEventListener('click', async (e) => {
       })
     })
     .then(res => { return res.json(); })
-    .then(data => console.log(data));
+    .then(data =>  { 
+  
+      //const { _id: items } = data;
+      //console.log(taskID);
+      checkbox.checked = true;
+      console.log(checkbox);
+    });
   }
 });
 

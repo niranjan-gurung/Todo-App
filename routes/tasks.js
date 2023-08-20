@@ -3,7 +3,8 @@ const express = require('express');
 const router = express.Router();
 
 const { 
-  getAllTask, 
+  getAllTask,
+  getTask, 
   createTask, 
   deleteTask,
   updateTask
@@ -14,6 +15,7 @@ router.route('/')
   .post(createTask);
 
 router.route('/:id')
+  .get(getTask)
   .delete(deleteTask)
   .patch(updateTask);
 
