@@ -22,17 +22,15 @@ const loadTasks = async () => {
       const { _id: taskID, completed, task: name } = task;
 
       if (completed) {
-        console.log(name + ' is completed!');
         checkbox.checked = true;
       }
-
+      
       return `<li data-id="${taskID}">
         <input type="checkbox" name="completed" class="task-edit" />
         <label>${name}</label>
         <button class="delete-btn">Delete</button>
       </li>`;
     }).join('');
-
     taskList.innerHTML = allTasks;
   })
   .catch(error => console.log(error));
@@ -62,7 +60,7 @@ form.onsubmit = async (e) => {
   inputBox.value = "";
 }
 
-/* Remove task from list: */
+/* Remove/Update task from list: */
 taskList.addEventListener('click', async (e) => {
   // remove li corresponding to delete button:   
   if (e.target.tagName.toLowerCase() === 'button') {
@@ -77,8 +75,11 @@ taskList.addEventListener('click', async (e) => {
     //e.target.parentElement.remove();
     loadTasks();
   }
+  // update the input checkbox (checked or unchecked):
   else if (e.target.tagName.toLowerCase() === 'input') {
+    const taskCompleted = e.target.checked;
     const id = e.target.parentElement.dataset.id;
+   
     await fetch(`${baseURL}/tasks/${id}`, {
       method: 'PATCH',
       headers: {
@@ -86,16 +87,20 @@ taskList.addEventListener('click', async (e) => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        completed: true
+        completed: taskCompleted
       })
     })
     .then(res => { return res.json(); })
     .then(data =>  { 
-  
-      //const { _id: items } = data;
-      //console.log(taskID);
-      checkbox.checked = true;
-      console.log(checkbox);
+      const { _id: taskID, completed, task } = data.task;
+      console.log(taskID, completed, task);
+
+      if (completed) {
+        e.target.setAttribute('checked', '');
+      }
+      else {
+        e.target.removeAttribute('checked');
+      }
     });
   }
 });
