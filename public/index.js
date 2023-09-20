@@ -2,8 +2,6 @@ const baseURL = 'http://localhost:3000';
 
 const form = document.querySelector('form');
 
-const checkbox = document.getElementsByClassName('task-edit');
-
 // task container (empty 'ul'),
 // addTask() - fills this element with 'li':
 const taskList = document.getElementById("task-list");
@@ -21,12 +19,11 @@ const loadTasks = async () => {
     const allTasks = data.tasks.map(task => {
       const { _id: taskID, completed, task: name } = task;
 
-      if (completed) {
-        checkbox.checked = true;
-      }
+      let checkedAttr;
+      checkedAttr = completed ? 'checked' : ''; 
       
       return `<li data-id="${taskID}">
-        <input type="checkbox" name="completed" class="task-edit" />
+        <input type="checkbox" name="completed" class="task-edit" ${checkedAttr} />
         <label>${name}</label>
         <button class="delete-btn">Delete</button>
       </li>`;
@@ -94,13 +91,6 @@ taskList.addEventListener('click', async (e) => {
     .then(data =>  { 
       const { _id: taskID, completed, task } = data.task;
       console.log(taskID, completed, task);
-
-      if (completed) {
-        e.target.setAttribute('checked', '');
-      }
-      else {
-        e.target.removeAttribute('checked');
-      }
     });
   }
 });
