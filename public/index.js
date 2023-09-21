@@ -55,6 +55,9 @@ form.onsubmit = async (e) => {
   
   // reset input text
   inputBox.value = "";
+
+  // reload page with new task
+  loadTasks();
 }
 
 /* Remove/Update task from list: */
@@ -66,10 +69,7 @@ taskList.addEventListener('click', async (e) => {
     // delete req:
     await fetch(`${baseURL}/tasks/${id}`, {
       method: 'DELETE',
-    })
-    .then(res => { return res.json(); })
-    .then(data => console.log(data));
-    //e.target.parentElement.remove();
+    });
     loadTasks();
   }
   // update the input checkbox (checked or unchecked):
@@ -86,11 +86,6 @@ taskList.addEventListener('click', async (e) => {
       body: JSON.stringify({
         completed: taskCompleted
       })
-    })
-    .then(res => { return res.json(); })
-    .then(data =>  { 
-      const { _id: taskID, completed, task } = data.task;
-      console.log(taskID, completed, task);
     });
   }
 });
