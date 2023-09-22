@@ -1,0 +1,5 @@
+# FullStack ToDo App
+
+This is a simple task managing application where users can add a list of 'todo' items and tick them off when its completed.  Everything is saved in a database(MongoDB) so the items you add, edit or delete are persistent when refreshing the page or relaunching the site on localhost:3000.
+
+For me this was an intro into full stack development, where I wanted to learn more about **CRUD apps**, **RESTful APIs** and **Databases**. This project definitely helped clear me understand the basics of these concepts, particular the backend side of development, where I had most of my confusion. I also learnt some very basic concepts of security using **dotenv** and **.gitignore**, to abstract the DB connection string (which contains private username/pass for the database) away from the public users, whilst still being able to use it to make connections to the DB.
