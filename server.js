@@ -6,7 +6,7 @@ const connectDB = require('./db/connect');
 require('dotenv').config();
 
 const DB_URI = process.env.MONGO_URI;
-const PORT = process.env.PORT; 
+const PORT = process.env.PORT || 3000; 
 
 // middleware
 app.use(express.static('public'));
